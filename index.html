@@ -8,7 +8,7 @@
   <body>
     <div id="label">
 	     <span>Are we brewing coffee?</span><br>
-	  <div id="answer"></div>
+	  <div id="answer">Connecting...</div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -19,11 +19,10 @@
       socket.on('brew_update', function(state){
         if(!state) {
           $('#answer').text("NO");
-          $("body").animate({backgroundColor: "lightred"}, "slow");
-          $("body").removeClass('brewing');
+          $("body").removeClass('brewing').addClass('not_brewing');
         } else {
           $('#answer').text("YES");
-          $("body").addClass('brewing');
+          $("body").removeClass('not_brewing').addClass('brewing');
         }
       });
     </script>

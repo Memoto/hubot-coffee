@@ -8,6 +8,10 @@ body {
   background:lightgreen;
 }
 
+.not_brewing {
+  background:#FF6666;
+}
+
 #label {
 	text-align: center;
 	margin-top: 10%;
