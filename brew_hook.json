@@ -1,0 +1,5 @@
+{
+    "eventName": "brew_active",
+    "url": "https://sthlm-coffee.herokuapp.com/brew_hook",
+    "mydevices": true
+}
