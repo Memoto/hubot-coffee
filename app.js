@@ -4,7 +4,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var brewing = false;
+var state = {"brewing": false, "last_brew_completed": null};
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -26,9 +26,10 @@ app.get('/brewing', function(req, res){
 
 app.post('/brew_hook', function(request, response) {
   if((request.body.data == "false")) {
-    brewing = false;
+    state.brewing = false;
+    state.last_brew_completed = new Date();
   } else {
-    brewing = true;
+    state.brewing = true;
   }
   io.emit('brew_update', brewing);
 
