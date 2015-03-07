@@ -21,7 +21,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/brewing', function(req, res){
-  res.json({"brewing": brewing});
+  res.json({"brewing": state});
 });
 
 app.post('/brew_hook', function(request, response) {
