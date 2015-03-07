@@ -19,10 +19,10 @@
       socket.on('brew_update', function(state){
         if(!state) {
           $('#answer').text("NO");
-          $("body").css("background-color","lightred !important");
+          $("body").animate({backgroundColor: "lightred"}, "slow");
         } else {
           $('#answer').text("YES");
-          $("body").css("background-color","lightgreen !important");
+          $("body").animate({backgroundColor: "lightgreen"}, "slow");
         }
       });
     </script>
