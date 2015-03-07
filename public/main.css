@@ -1,7 +1,11 @@
 
 body {
-	margin: 0;
-	background-color: lightgrey;
+  background:lightgrey;
+  transition:background-color 0.5s ease;
+}
+
+.brewing {
+  background:lightgreen;
 }
 
 #label {

@@ -20,9 +20,10 @@
         if(!state) {
           $('#answer').text("NO");
           $("body").animate({backgroundColor: "lightred"}, "slow");
+          $("body").removeClass('brewing');
         } else {
           $('#answer').text("YES");
-          $("body").animate({backgroundColor: "lightgreen"}, "slow");
+          $("body").addClass('brewing');
         }
       });
     </script>
