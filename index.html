@@ -16,8 +16,8 @@
     <script>
       var socket = io();
 
-      socket.on('brew_update', function(msg){
-        if(msg.indexOf("true") == -1) {
+      socket.on('brew_update', function(state){
+        if(!state) {
           $('#answer').text("NO");
         } else {
           $('#answer').text("YES");

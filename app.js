@@ -4,10 +4,11 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var data = {};
+var brewing = false;
 
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.emit('brew_update', brewing);
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
@@ -20,10 +21,13 @@ app.get('/', function(req, res){
 });
 
 app.post('/brew_hook', function(request, response) {
-  console.log(request.body);
-  io.emit('brew_update', JSON.stringify(request.body));
+  if((request.body.data == "false")) {
+    brewing = false;
+  } else {
+    brewing = true;
+  }
+  io.emit('brew_update', brewing);
 
-  data = request.body.event + " " + request.body.data;
   response.sendStatus(200);
 });
 
