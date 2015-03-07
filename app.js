@@ -12,6 +12,7 @@ app.get('/', function(request, response) {
 });
 
 app.post('/brew_hook', function(request, response) {
+  console.log(request.body);
   data = request.body;
   response.sendStatus(200);
 });
