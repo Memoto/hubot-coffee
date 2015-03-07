@@ -20,7 +20,7 @@ app.get('/', function(req, res){
 
 app.post('/brew_hook', function(request, response) {
   console.log(request.body);
-  io.emit('brew_update', request.body);
+  io.emit('brew_update', JSON.stringify(request.body));
 
   data = request.body.event + " " + request.body.data;
   response.sendStatus(200);
