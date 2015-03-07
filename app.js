@@ -13,7 +13,6 @@ io.on('connection', function(socket){
   });
 });
 app.use(bodyParser.json());
-app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
@@ -27,6 +26,6 @@ app.post('/brew_hook', function(request, response) {
   response.sendStatus(200);
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(process.env.PORT || 5000, function(){
+  console.log('listening on ' process.env.PORT || 5000);
 });
