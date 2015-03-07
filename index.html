@@ -17,7 +17,7 @@
       var socket = io();
 
       socket.on('brew_update', function(state){
-        if(!state) {
+        if(state.indexOf("true") == -1) {
           $('#answer').text("NO");
           $("body").removeClass('brewing').addClass('not_brewing');
         } else {
