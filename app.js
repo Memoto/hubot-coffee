@@ -26,6 +26,6 @@ app.post('/brew_hook', function(request, response) {
   response.sendStatus(200);
 });
 
-http.listen(process.env.PORT || 5000, function(){
-  console.log('listening on ' process.env.PORT || 5000);
+http.listen((process.env.PORT || 5000), function(){
+  console.log('listening on ' + (process.env.PORT || 5000));
 });
