@@ -8,7 +8,7 @@ var state = {"brewing": false, "last_brew_completed": null};
 
 io.on('connection', function(socket){
   console.log('a user connected');
-  socket.emit('brew_update', brewing);
+  socket.emit('brew_update', state);
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
