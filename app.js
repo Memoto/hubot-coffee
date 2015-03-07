@@ -20,6 +20,10 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/brewing', function(req, res){
+  res.json({"brewing": brewing});
+});
+
 app.post('/brew_hook', function(request, response) {
   if((request.body.data == "false")) {
     brewing = false;
