@@ -30,19 +30,27 @@ app.get('/brewing', function(req, res){
 var stateCount = 0;
 var timer;
 var resetTimer;
+var brewing = false;
 
 app.post('/brew_hook', function(req, res) {
   stateCount++;
   clearTimeout(resetTimer);
   resetTimer = setTimeout(function() {
     stateCount = 0;
+    brewing = false;
   }, 60000);
 
   if (stateCount > 1) {
+    if (brewing == false) {
+      brewing = true;
+      request(hubotDomain + '/brewingcoffee'); // Ping hubot webhook that the coffee is ready
+    }
+
     clearTimeout(timer);
     timer = setTimeout(function() {
       stateCount = 0;
-      request(hubotDomain + '/coffee'); // Ping hubot webhook that the coffee is ready
+      brewing = false;
+      request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
     }, 180000);
   }
 
