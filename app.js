@@ -32,25 +32,15 @@ var timer;
 var resetTimer;
 
 app.post('/brew_hook', function(req, res) {
-  console.log('');
-  console.log('---------------');
-  console.log('stateCount old: ' + stateCount);
-  console.log('body: ' + req.body.data);
-
-  console.log('we have data');
   stateCount++;
   clearTimeout(resetTimer);
   resetTimer = setTimeout(function() {
     stateCount = 0;
   }, 60000);
 
-  console.log('stateCount new: ' + stateCount);
-
   if (stateCount > 1) {
-    console.log('above limit, setting timeout');
     clearTimeout(timer);
     timer = setTimeout(function() {
-      console.log('doing CALL');
       stateCount = 0;
       request(hubotDomain + '/coffee'); // Ping hubot webhook that the coffee is ready
     }, 30000);
@@ -58,8 +48,6 @@ app.post('/brew_hook', function(req, res) {
 
   io.emit('brew_update', JSON.stringify(state));
   res.sendStatus(200);
-  console.log('---------------');
-  console.log('');
 });
 
 http.listen((process.env.PORT || 5000), function(){
