@@ -37,14 +37,12 @@ app.post('/brew_hook', function(req, res) {
   console.log('stateCount old: ' + stateCount);
   console.log('body: ' + req.body.data);
 
-  if (req.body.data) {
-    console.log('we have data');
-    stateCount++;
-    clearTimeout(resetTimer);
-    resetTimer = setTimeout(function() {
-      stateCount = 0;
-    }, 60000);
-  }
+  console.log('we have data');
+  stateCount++;
+  clearTimeout(resetTimer);
+  resetTimer = setTimeout(function() {
+    stateCount = 0;
+  }, 60000);
 
   console.log('stateCount new: ' + stateCount);
 
