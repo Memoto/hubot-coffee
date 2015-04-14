@@ -5,7 +5,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var request = require('request');
 
-var hubotDomain = "http://35fed9ba.ngrok.com";
+var hubotDomain = "http://linkoping.nrtv.io:8889";
 
 var stateCount = 0;
 var timer;
