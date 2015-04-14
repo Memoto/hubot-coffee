@@ -43,7 +43,7 @@ app.post('/brew_hook', function(req, res) {
     timer = setTimeout(function() {
       stateCount = 0;
       request(hubotDomain + '/coffee'); // Ping hubot webhook that the coffee is ready
-    }, 30000);
+    }, 180000);
   }
 
   io.emit('brew_update', JSON.stringify(state));
