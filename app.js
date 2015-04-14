@@ -14,7 +14,7 @@ var brewing = false;
 
 io.on('connection', function(socket){
   console.log('a user connected');
-  socket.emit('brew_update', { "brewing": brewing });
+  socket.emit('brew_update', JSON.stringify({ "brewing": brewing }));
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
@@ -41,7 +41,7 @@ app.post('/brew_hook', function(req, res) {
   if (stateCount > 1) {
     if (brewing === false) {
       brewing = true;
-      io.emit('brew_update', { "brewing": brewing });
+      io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
       request(hubotDomain + '/brewingcoffee'); // Ping hubot webhook that the coffee is ready
     }
 
@@ -49,7 +49,7 @@ app.post('/brew_hook', function(req, res) {
     timer = setTimeout(function() {
       stateCount = 0;
       brewing = false;
-      io.emit('brew_update', { "brewing": brewing });
+      io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
       request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
     }, 240000);
   }
