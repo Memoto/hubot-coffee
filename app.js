@@ -7,15 +7,12 @@ var request = require('request');
 var Parse = require('parse').Parse;
 
 var hubotDomain = "http://35fed9ba.ngrok.com";
-<<<<<<< HEAD
 Parse.initialize("0JTH1cWqPQZwm5qmJTGmXrxnakZELLy9gV5D8p56", "FddmGxeXELQgFLOne76Ys58QAGo7o3Q5lbdys2q8");
-=======
 
 var stateCount = 0;
 var timer;
 var resetTimer;
 var brewing = false;
->>>>>>> e49c3bffa78030bcf0a37b7309b90da50a9a7705
 
 io.on('connection', function(socket){
   console.log('a user connected');
