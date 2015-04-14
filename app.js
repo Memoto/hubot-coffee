@@ -4,8 +4,10 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var request = require('request');
+var Parse = require('parse').Parse;
 
 var hubotDomain = "http://linkoping.nrtv.io:8889";
+Parse.initialize("0JTH1cWqPQZwm5qmJTGmXrxnakZELLy9gV5D8p56", "FddmGxeXELQgFLOne76Ys58QAGo7o3Q5lbdys2q8");
 
 var stateCount = 0;
 var timer;
@@ -31,6 +33,7 @@ app.get('/brewing', function(req, res){
 });
 
 app.post('/brew_hook', function(req, res) {
+
   stateCount++;
   clearTimeout(resetTimer);
   resetTimer = setTimeout(function() {
@@ -49,6 +52,11 @@ app.post('/brew_hook', function(req, res) {
     timer = setTimeout(function() {
       stateCount = 0;
       brewing = false;
+
+      var CoffeeObject = Parse.Object.extend("Coffee");
+      var coffeeObject = new CoffeeObject();
+      coffeeObject.save({cups: 7});
+
       io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
       request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
     }, 240000);
