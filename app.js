@@ -14,7 +14,7 @@ var brewing = false;
 
 io.on('connection', function(socket){
   console.log('a user connected');
-  socket.emit('brew_update', JSON.stringify(state));
+  socket.emit('brew_update', { "brewing": brewing });
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
