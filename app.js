@@ -27,16 +27,28 @@ app.get('/brewing', function(req, res){
   res.json({"brewing": state});
 });
 
-app.post('/brew_hook', function(req, res) {
-  if((req.body.data == "false")) {
-    state.brewing = false;
-    state.last_brew_completed = new Date();
-    request(hubotDomain + '/coffee'); // Ping hubot webhook that the coffee is ready
-  } else {
-    state.brewing = true;
-  }
-  io.emit('brew_update', JSON.stringify(state));
+var stateCount = 0;
+var timer;
+var resetTimer;
 
+app.post('/brew_hook', function(req, res) {
+  if (req.body.data) {
+    stateCount++;
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(function() {
+      stateCount = 0;
+    }, 60000);
+  }
+
+  if (stateCount === 2) {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      stateCount = 0;
+      request(hubotDomain + '/coffee'); // Ping hubot webhook that the coffee is ready
+    }, 30000);
+  }
+
+  io.emit('brew_update', JSON.stringify(state));
   res.sendStatus(200);
 });
 
