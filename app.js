@@ -40,7 +40,7 @@ app.post('/brew_hook', function(req, res) {
     }, 60000);
   }
 
-  if (stateCount === 2) {
+  if (stateCount > 1) {
     clearTimeout(timer);
     timer = setTimeout(function() {
       stateCount = 0;
