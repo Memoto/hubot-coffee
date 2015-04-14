@@ -28,7 +28,7 @@ app.get('/brewing', function(req, res){
 });
 
 app.post('/brew_hook', function(req, res) {
-  if((request.body.data == "false")) {
+  if((req.body.data == "false")) {
     state.brewing = false;
     state.last_brew_completed = new Date();
     request(hubotDomain + '/coffee'); // Ping hubot webhook that the coffee is ready
