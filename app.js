@@ -6,13 +6,20 @@ var io = require('socket.io')(http);
 var request = require('request');
 var Parse = require('parse').Parse;
 
-var state = {"brewing": false, "last_brew_completed": null};
 var hubotDomain = "http://35fed9ba.ngrok.com";
+<<<<<<< HEAD
 Parse.initialize("0JTH1cWqPQZwm5qmJTGmXrxnakZELLy9gV5D8p56", "FddmGxeXELQgFLOne76Ys58QAGo7o3Q5lbdys2q8");
+=======
+
+var stateCount = 0;
+var timer;
+var resetTimer;
+var brewing = false;
+>>>>>>> e49c3bffa78030bcf0a37b7309b90da50a9a7705
 
 io.on('connection', function(socket){
   console.log('a user connected');
-  socket.emit('brew_update', JSON.stringify(state));
+  socket.emit('brew_update', JSON.stringify({ "brewing": brewing }));
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
@@ -25,13 +32,8 @@ app.get('/', function(req, res){
 });
 
 app.get('/brewing', function(req, res){
-  res.json({"brewing": state});
+  res.json(JSON.stringify({"brewing": brewing}));
 });
-
-var stateCount = 0;
-var timer;
-var resetTimer;
-var brewing = false;
 
 app.post('/brew_hook', function(req, res) {
 
@@ -45,6 +47,7 @@ app.post('/brew_hook', function(req, res) {
   if (stateCount > 1) {
     if (brewing === false) {
       brewing = true;
+      io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
       request(hubotDomain + '/brewingcoffee'); // Ping hubot webhook that the coffee is ready
     }
 
@@ -57,11 +60,11 @@ app.post('/brew_hook', function(req, res) {
       var coffeeObject = new CoffeeObject();
       coffeeObject.save({cups: 7});
 
+      io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
       request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
     }, 240000);
   }
 
-  io.emit('brew_update', JSON.stringify(state));
   res.sendStatus(200);
 });
 
