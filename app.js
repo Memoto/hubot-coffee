@@ -41,7 +41,7 @@ app.post('/brew_hook', function(req, res) {
   }, 60000);
 
   if (stateCount > 1) {
-    if (brewing == false) {
+    if (brewing === false) {
       brewing = true;
       request(hubotDomain + '/brewingcoffee'); // Ping hubot webhook that the coffee is ready
     }
@@ -51,7 +51,7 @@ app.post('/brew_hook', function(req, res) {
       stateCount = 0;
       brewing = false;
       request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
-    }, 180000);
+    }, 240000);
   }
 
   io.emit('brew_update', JSON.stringify(state));
