@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>Is the brewer making magic?</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+
+</head>
+<body>
+  <div class="label">
+    <span>Are we brewing coffee?</span><br>
+    <div class="answer answer--yes">Yes</div>
+    <div class="answer answer--no">No</div>
+    <div class="answer answer--unsure">...</div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+
+    socket.on('brew_update', function(state){
+      if(state.indexOf("true") == -1) {
+        document.body.className = 'brewing'
+      } else {
+        document.body.className = 'not_brewing'
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "sthlm-coffee",
+  "version": "0.0.1",
+  "description": "Collects statistics of coffee brewing in the Stockholm office",
+  "author": "Joakim Berglund",
+  "contributors": [
+    { "name" : "Joakim Berglund",
+      "email" : "joakim@getnarrative.com",
+      "url" : "https://github.com/Berglund"
+    },
+    { "name" : "Johan Stenehall",
+      "email" : "johan@getnarrative.com",
+      "url" : "https://github.com/stenehall"
+    }
+  ],
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.12.0",
+    "express": "^4.12.2",
+    "parse": "^1.2.19",
+    "request": "^2.55.0",
+    "socket.io": "^1.3.5"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}

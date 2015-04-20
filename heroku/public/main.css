@@ -1,0 +1,40 @@
+body {
+  background:lightgrey;
+  transition:background-color 0.5s ease;
+}
+
+.brewing {
+  background:lightgreen;
+}
+
+.not_brewing {
+  background:#FF6666;
+}
+
+.label {
+	text-align: center;
+	margin-top: 10%;
+	font-family: Helvetica;
+	font-size: 200px;
+	color: white;
+}
+
+.label span {
+	font-size: 34px;
+}
+
+.answer {
+  display: none;
+}
+
+.answer--unsure {
+  display: inherit;
+}
+
+.brewing .answer--yes, .not_brewing .answer--no {
+  display: inherit;
+}
+
+.brewing .answer--unsure, .not_brewing .answer--unsure {
+  display: none;
+}
