@@ -40,6 +40,7 @@ app.get('/stats', function(req, res){
     success: function (results) {
       var overDays = {};
       var overWeekdays = {};
+      var totCups = 0;
       console.log(results.length);
       for (var i = 0; i < results.length; i++) {
         var cups = results[i].get('cups');
@@ -53,9 +54,9 @@ app.get('/stats', function(req, res){
           overWeekdays[d.getDay()] = 0;
         }
 
-        console.log(dateStr + ' ' + cups);
-        overDays[dateStr] = overDays[dateStr] + cups;
-        overWeekdays[d.getDay()] = overWeekdays[d.getDay()]+ cups;
+        totCups += cups;
+        overDays[dateStr] += cups;
+        overWeekdays[d.getDay()] += cups;
         var coffeeArr = [];
       }
 
