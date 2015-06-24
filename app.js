@@ -60,7 +60,7 @@ app.get('/stats', function(req, res){
         var coffeeArr = [];
       }
 
-      res.render('stats', { overDays: overDays, overWeekdays: overWeekdays});
+      res.render('stats', { overDays: overDays, overWeekdays: overWeekdays, totCups: totCups});
     },
     error: function (error) {
       alert("Error: " + error.code + " " + error.message);

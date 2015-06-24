@@ -41,23 +41,23 @@ function drawOverDays() {
 
 function drawOverWeekdays() {
 
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Cups per day'],
-          ['Monday',        <%= overWeekdays[1] %>],
-          ['Thusday',       <%= overWeekdays[2] %>],
-          ['Wednsdy',       <%= overWeekdays[3] %>],
-          ['Thursday',      <%= overWeekdays[4] %>],
-          ['Friday',        <%= overWeekdays[5] %>]
-        ]);
+  var data = google.visualization.arrayToDataTable([
+      ['Task', 'Cups per day'],
+      ['Monday',        <%= overWeekdays[1] %>],
+      ['Thusday',       <%= overWeekdays[2] %>],
+      ['Wednsdy',       <%= overWeekdays[3] %>],
+      ['Thursday',      <%= overWeekdays[4] %>],
+      ['Friday',        <%= overWeekdays[5] %>]
+  ]);
 
-        var options = {
-          title: 'Weekday consumtopn'
-        };
+  var options = {
+    title: 'Weekday consumtopn'
+  };
 
-        var chart = new google.visualization.PieChart(document.getElementById('over-weekdays'));
+  var chart = new google.visualization.PieChart(document.getElementById('over-weekdays'));
 
-        chart.draw(data, options);
-      }
+  chart.draw(data, options);
+}
 
 
 
@@ -68,8 +68,10 @@ function drawOverWeekdays() {
     </script>
   </head>
   <body class="stats">
-    <h1>The stockholm office coffee consumtion</h1>
-    <p>Total cups brewed: <%= totCups %></p>
+    <div>
+      <h1>The stockholm office coffee consumtion</h1>
+      <p>Total cups brewed: <%= totCups %></p>
+    </div>
     <div id="over-days"></div>
     <div id="over-weekdays"></div>
   </body>

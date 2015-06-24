@@ -14,15 +14,15 @@ body {
 }
 
 #label {
-	text-align: center;
-	margin-top: 10%;
-	font-family: Helvetica;
-	font-size: 200px;
-	color: white;
+  text-align: center;
+  margin-top: 10%;
+  font-family: Helvetica;
+  font-size: 200px;
+  color: white;
 }
 
 #label span {
-	font-size: 34px;
+  font-size: 34px;
 }
 
 .stats {
