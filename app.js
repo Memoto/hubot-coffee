@@ -35,10 +35,12 @@ app.get('/stats', function(req, res){
 
   var CoffeeObject = Parse.Object.extend("Coffee");
   var queryObject = new Parse.Query(CoffeeObject);
+  queryObject.limit(10000);
   queryObject.find({
     success: function (results) {
       var overDays = {};
       var overWeekdays = {};
+      console.log(results.length);
       for (var i = 0; i < results.length; i++) {
         var cups = results[i].get('cups');
         var d = new Date(results[i].createdAt);
@@ -47,12 +49,11 @@ app.get('/stats', function(req, res){
         if (overDays[dateStr] === undefined) {
           overDays[dateStr] = 0;
         }
-      if (overWeekdays[d.getDay()] === undefined) {
+        if (overWeekdays[d.getDay()] === undefined) {
           overWeekdays[d.getDay()] = 0;
         }
 
-
-
+        console.log(dateStr + ' ' + cups);
         overDays[dateStr] = overDays[dateStr] + cups;
         overWeekdays[d.getDay()] = overWeekdays[d.getDay()]+ cups;
         var coffeeArr = [];
@@ -66,45 +67,45 @@ app.get('/stats', function(req, res){
   });
 
 
-  });
+});
 
-  app.get('/brewing', function(req, res){
-    res.json(JSON.stringify({"brewing": brewing}));
-  });
+app.get('/brewing', function(req, res){
+  res.json(JSON.stringify({"brewing": brewing}));
+});
 
-  app.post('/brew_hook', function(req, res) {
+app.post('/brew_hook', function(req, res) {
 
-    stateCount++;
-    clearTimeout(resetTimer);
-    resetTimer = setTimeout(function() {
-      stateCount = 0;
-      brewing = false;
-    }, 60000);
+  stateCount++;
+  clearTimeout(resetTimer);
+  resetTimer = setTimeout(function() {
+    stateCount = 0;
+    brewing = false;
+  }, 60000);
 
-    if (stateCount > 1) {
-      if (brewing === false) {
-        brewing = true;
-        io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
-        request(hubotDomain + '/brewingcoffee'); // Ping hubot webhook that the coffee is ready
-      }
-
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        stateCount = 0;
-        brewing = false;
-
-        var CoffeeObject = Parse.Object.extend("Coffee");
-        var coffeeObject = new CoffeeObject();
-        coffeeObject.save({cups: 7});
-
-        io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
-        request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
-      }, 240000);
+  if (stateCount > 1) {
+    if (brewing === false) {
+      brewing = true;
+      io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
+      request(hubotDomain + '/brewingcoffee'); // Ping hubot webhook that the coffee is ready
     }
 
-    res.sendStatus(200);
-  });
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      stateCount = 0;
+      brewing = false;
 
-  http.listen((process.env.PORT || 5000), function(){
-    console.log('listening on ' + (process.env.PORT || 5000));
-  });
+      var CoffeeObject = Parse.Object.extend("Coffee");
+      var coffeeObject = new CoffeeObject();
+      coffeeObject.save({cups: 7});
+
+      io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
+      request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
+    }, 240000);
+  }
+
+  res.sendStatus(200);
+});
+
+http.listen((process.env.PORT || 5000), function(){
+  console.log('listening on ' + (process.env.PORT || 5000));
+});
