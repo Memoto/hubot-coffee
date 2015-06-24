@@ -2,6 +2,7 @@
 body {
   background:lightgrey;
   transition:background-color 0.5s ease;
+  margin: 0;
 }
 
 .brewing {
@@ -22,4 +23,13 @@ body {
 
 #label span {
 	font-size: 34px;
+}
+
+.stats {
+  background: #fff;
+}
+
+.stats > div {
+  width: 900px;
+  margin: 50px auto;
 }

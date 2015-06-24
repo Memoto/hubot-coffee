@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
-  res.render('index', { title: 'The index page!' })
+  res.render('index', { title: 'The index page!' });
 });
 
 
@@ -37,20 +37,28 @@ app.get('/stats', function(req, res){
   var queryObject = new Parse.Query(CoffeeObject);
   queryObject.find({
     success: function (results) {
-      var coffee = {};
+      var overDays = {};
+      var overWeekdays = {};
       for (var i = 0; i < results.length; i++) {
         var cups = results[i].get('cups');
         var d = new Date(results[i].createdAt);
         var dateStr = d.getFullYear() + '-' + ('0' + d.getMonth()).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
 
-        if (coffee[dateStr] === undefined) {
-          coffee[dateStr] = 0;
+        if (overDays[dateStr] === undefined) {
+          overDays[dateStr] = 0;
+        }
+      if (overWeekdays[d.getDay()] === undefined) {
+          overWeekdays[d.getDay()] = 0;
         }
 
-        coffee[dateStr] = coffee[dateStr] + cups;
+
+
+        overDays[dateStr] = overDays[dateStr] + cups;
+        overWeekdays[d.getDay()] = overWeekdays[d.getDay()]+ cups;
         var coffeeArr = [];
       }
-      res.render('stats', { coffee: coffee });
+
+      res.render('stats', { overDays: overDays, overWeekdays: overWeekdays});
     },
     error: function (error) {
       alert("Error: " + error.code + " " + error.message);

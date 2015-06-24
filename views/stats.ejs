@@ -1,46 +1,74 @@
 <!doctype html>
 <html>
-<head>
-<title>Is the brewer making magic?</title>
-<link rel="stylesheet" type="text/css" href="main.css">
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
+  <head>
+    <title>Is the brewer making magic?</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
 
 // Load the Visualization API and the piechart package.
-google.load('visualization', '1.0', {'packages':['corechart']});
-google.setOnLoadCallback(drawChart);
-function drawChart() {
+google.load('visualization', '1.1', {'packages':['line']});
+google.load('visualization', '1.1', {'packages':['corechart']});
+google.setOnLoadCallback(drawOverDays);
+google.setOnLoadCallback(drawOverWeekdays);
+function drawOverDays() {
 
-var data = new google.visualization.DataTable();
-        data.addColumn('date', 'Time of Day');
-        data.addColumn('number', 'Rating');
+  var data = new google.visualization.DataTable();
+  data.addColumn('date', 'Time of Day');
+  data.addColumn('number', 'Cups');
 
-        data.addRows([
-      <% for (var i in coffee) { %>
-      [new Date('<%= i %>'), <%= coffee[i] %>],
-      <% } %>
+  data.addRows([
+      <% for (var i in overDays) { %>
+        [new Date('<%= i %>'), <%= overDays[i] %>],
+        <% } %>
+  ]);
+  var options = {
+    title: 'Coffee consumtion in the Stockholm Office',
+    width: 900,
+    height: 500,
+    hAxis: {
+      format: 'd-M-y',
+    },
+    vAxis: {
+      gridlines: {color: 'none'},
+      minValue: 0
+    }
+  };
+
+  var chart = new google.charts.Line(document.getElementById('over-days'));
+  chart.draw(data, options);
+}
+
+function drawOverWeekdays() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Cups per day'],
+          ['Monday',        <%= overWeekdays[1] %>],
+          ['Thusday',       <%= overWeekdays[2] %>],
+          ['Wednsdy',       <%= overWeekdays[3] %>],
+          ['Thursday',      <%= overWeekdays[4] %>],
+          ['Friday',        <%= overWeekdays[5] %>]
         ]);
-var options = {
-          title: 'Coffee consumtion in the Stockholm Office',
-          width: 900,
-          height: 500,
-          hAxis: {
-            format: 'd-M-y',
-          },
-          vAxis: {
-            gridlines: {color: 'none'},
-            minValue: 0
-          }
+
+        var options = {
+          title: 'Weekday consumtopn'
         };
 
+        var chart = new google.visualization.PieChart(document.getElementById('over-weekdays'));
+
+        chart.draw(data, options);
+      }
 
 
-var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-chart.draw(data, options);
-}
-</script>
-</head>
-<body>
-<div id="chart_div"></div>
-</body>
+
+
+
+
+
+    </script>
+  </head>
+  <body class="stats">
+    <div id="over-days"></div>
+    <div id="over-weekdays"></div>
+  </body>
 </html>
