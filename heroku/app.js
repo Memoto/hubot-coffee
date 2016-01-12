@@ -4,7 +4,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var request = require('request');
-var Parse = require('parse').Parse;
+var Parse = require('parse/node').Parse;
 
 var hubotDomain = process.env.HUBOT_DOMAIN;
 var appId = process.env.APP_ID;
