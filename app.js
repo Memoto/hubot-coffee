@@ -105,16 +105,19 @@ app.post('/brew_hook', function(req, res) {
 
     clearTimeout(timer);
     timer = setTimeout(function() {
-      stateCount = 0;
-      brewing = false;
+      request(hubotDomain + '/waterdraining');
+      setTimeout(function() {
+        stateCount = 0;
+        brewing = false;
 
-      var CoffeeObject = Parse.Object.extend("Coffee");
-      var coffeeObject = new CoffeeObject();
-      coffeeObject.save({cups: 7});
+        var CoffeeObject = Parse.Object.extend("Coffee");
+        var coffeeObject = new CoffeeObject();
+        coffeeObject.save({cups: 7});
 
-      io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
-      request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
-    }, 240000);
+        io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
+        request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
+      }, 240000);
+    }, 10000);
   }
 
   res.sendStatus(200);
