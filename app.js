@@ -4,10 +4,14 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var request = require('request');
-var Parse = require('parse').Parse;
+var Parse = require('parse/nodes').Parse;
 
-var hubotDomain = "http://linkoping.nrtv.io:8889";
-Parse.initialize("0JTH1cWqPQZwm5qmJTGmXrxnakZELLy9gV5D8p56", "FddmGxeXELQgFLOne76Ys58QAGo7o3Q5lbdys2q8");
+
+var hubotDomain = process.env.HUBOT_DOMAIN;
+var appId = process.env.APP_ID;
+var jsKey = process.env.JS_KEY;
+Parse.initialize(appId, jsKey);
+
 
 var stateCount = 0;
 var timer;
