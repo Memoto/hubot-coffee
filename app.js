@@ -117,7 +117,7 @@ app.post('/brew_hook', function(req, res) {
         io.emit('brew_update', JSON.stringify({ "brewing": brewing }));
         request(hubotDomain + '/donecoffee'); // Ping hubot webhook that the coffee is ready
       }, 240000);
-    }, 10000);
+    }, 30000);
   }
 
   res.sendStatus(200);
